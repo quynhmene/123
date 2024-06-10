@@ -40,7 +40,7 @@ elseif game.PlaceId == 3237168 then
     })
     wait()
     loadstring(game:HttpGet("https://github.com/quynhmene/123/blob/f34adb9f6743089ee0e913a7c87c417faee0008f/a.txt#L15C99-L15C112"))()
-else
+elseif game.PlaceId == 8569358381 then
     wait(1)
     game.StarterGui:SetCore("SendNotification", {
         Title = "Eror",
