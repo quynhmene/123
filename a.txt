@@ -12,7 +12,7 @@ if game.PlaceId == 914010731 then
         Duration = 10
     })
     wait()
-    loadstring(game:HttpGet("https://github.com/quynhmene/123/blob/f34adb9f6743089ee0e913a7c87c417faee0008f/a.txt#L15C99-L15C112"))()
+    loadstring(game:HttpGet("https://gitlab.com/vugiakhiem2106/game/-/raw/main/"..game.PlaceId.."_RoGhoul"..".lua"))()
 elseif game.PlaceId == 537413528 then
     game.StarterGui:SetCore("SendNotification", {
         Title = "1",
@@ -21,7 +21,7 @@ elseif game.PlaceId == 537413528 then
         Duration = 10
     })
     wait()
-    loadstring(game:HttpGet("https://github.com/quynhmene/123/blob/f34adb9f6743089ee0e913a7c87c417faee0008f/a.txt#L15C99-L15C112"))()
+    loadstring(game:HttpGet("https://gitlab.com/vugiakhiem2106/game/-/raw/main/"..game.PlaceId.."_BuildBoatForTreasure"..".lua"))()
 elseif game.PlaceId == 13808990310 then
     game.StarterGui:SetCore("SendNotification", {
         Title = "1",
@@ -30,7 +30,7 @@ elseif game.PlaceId == 13808990310 then
         Duration = 10
     })
     wait()
-    loadstring(game:HttpGet("https://github.com/quynhmene/123/blob/f34adb9f6743089ee0e913a7c87c417faee0008f/a.txt#L15C99-L15C112"))()
+    loadstring(game:HttpGet("https://gitlab.com/vugiakhiem2106/game/-/raw/main/"..game.PlaceId.."_TLS"..".lua"))()
 elseif game.PlaceId == 3237168 then
     game.StarterGui:SetCore("SendNotification", {
         Title = "1",
@@ -39,8 +39,18 @@ elseif game.PlaceId == 3237168 then
         Duration = 10
     })
     wait()
-    loadstring(game:HttpGet("https://github.com/quynhmene/123/blob/f34adb9f6743089ee0e913a7c87c417faee0008f/a.txt#L15C99-L15C112"))()
-elseif 
+    loadstring(game:HttpGet("https://gitlab.com/vugiakhiem2106/game/-/raw/main/"..game.PlaceId.."_OPL"..".lua"))()
+-- Thêm điều kiện cho các trò chơi khác ở đây:
+elseif game.PlaceId == YOUR_NEW_PLACE_ID then
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "1",
+        Text = "WAIT FEW SECONDS TO LOAD",
+        Icon = "YOUR_NEW_ICON_URL",
+        Duration = 10
+    })
+    wait()
+    loadstring(game:HttpGet("YOUR_NEW_SCRIPT_URL"))()
+else
     wait(1)
     game.StarterGui:SetCore("SendNotification", {
         Title = "Eror",
