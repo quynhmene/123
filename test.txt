@@ -1,0 +1,522 @@
+local nameven = "Lucky block venyx"
+for i,v in pairs(game.CoreGui:GetChildren()) do
+	if v.Name == nameven then
+		v:Destroy()
+	end
+end
+
+lplr = game.Players.LocalPlayer
+block = 'GalaxyBlock'
+howmany = 1
+looptpdistance = 2
+backstabdistance = 3.25
+_G.romfflyingon = false
+_G.maxspeedromfly = 100
+
+if _G.luckyblockven == nil then
+	_G.luckyblockven = 1
+else
+	_G.luckyblockven = _G.luckyblockven + 1 
+end
+local bindworksvenyx = _G.luckyblockven
+
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/GreenDeno/Venyx-UI-Library/main/source.lua"))()
+local venyx = library.new(nameven, 5013109572, page1)
+
+
+-- Pages ---------------------------------------------------------------------------------------------------------------------------------------
+
+local page1 = venyx:addPage("Main", 5012544693)
+local section11 = page1:addSection("By RomashkaHEHE")
+local section12 = page1:addSection('[Beta]')
+spawn(function()
+	venyx:SelectPage(page1, true)
+end)
+
+local page2 = venyx:addPage("Universal", 5012544693)
+local section21 = page2:addSection("By RomashkaHEHE")
+local section22 = page2:addSection("")
+
+local page3 = venyx:addPage("Players", 5012544693)
+local section31 = page3:addSection("By RomashkaHEHE")
+local section32 = page3:addSection("")
+
+local page4 = venyx:addPage("Misc", 5012544693)
+local section41 = page4:addSection("By RomashkaHEHE")
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-- start Functions -----------------------------------------------------------------------------------------------------------------------------
+
+playerst = {}
+for i,v in pairs(game.Players:GetChildren()) do
+	table.insert(playerst, v.Name)
+end
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-- Page1 ---------------------------------------------------------------------------------------------------------------------------------------
+
+section11:addDropdown('Block', {'LuckyBlock', 'SuperBlock', 'DiamondBlock', 'RainbowBlock', 'GalaxyBlock'}, function(val)
+	block = val
+end)
+
+section11:addButton('Open block', function()
+	for i = 1, howmany do
+		game:GetService("ReplicatedStorage")['Spawn'..block]:FireServer()
+	end
+end)
+
+section11:addSlider('How many blocks are there to open?', 1, 1, 20, function(val)
+	howmany = tonumber(val)
+end)
+
+section11:addButton('Get all items', function()
+	for i = 1,1000 do
+		game.ReplicatedStorage.SpawnGalaxyBlock:FireServer()
+		game.ReplicatedStorage.SpawnRainbowBlock:FireServer()
+		game.ReplicatedStorage.SpawnDiamondBlock:FireServer()
+		game.ReplicatedStorage.SpawnSuperBlock:FireServer()
+		game.ReplicatedStorage.SpawnLuckyBlock:FireServer()
+	end
+end)
+
+crash = section12:addButton('Crash Server', function()
+	local da = #lplr.Character:GetChildren()
+	local skok = 0
+	local daskok = 30
+	section12:updateButton(crash, 'Loading ('..skok..'/'..daskok..')')
+	for i = 1,1000 do
+		game.ReplicatedStorage.SpawnRainbowBlock:FireServer()
+		game.ReplicatedStorage.SpawnDiamondBlock:FireServer()
+		game.ReplicatedStorage.SpawnSuperBlock:FireServer()
+		game.ReplicatedStorage.SpawnLuckyBlock:FireServer()
+		game.ReplicatedStorage.SpawnGalaxyBlock:FireServer()
+	end
+	while wait(0.1) and #lplr.Character:GetChildren()-da < daskok do
+		for i,v in pairs(lplr.Backpack:GetChildren()) do
+			if v.Name == 'IvoryPeriastron' then
+				v.Parent = lplr.Character
+				skok = #lplr.Character:GetChildren()-da
+				section12:updateButton(crash, 'Loading ('..skok..'/'..daskok..')')
+			end
+		end
+	end
+	wait(1)
+	section12:updateButton(crash, 'Done! bye bye server')
+	for i,v in pairs(lplr.Character:GetChildren()) do
+		if v.Name == 'IvoryPeriastron' then
+			v.Remote:FireServer(Enum.KeyCode.Q)
+		end
+	end
+end)
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-- Page2 ---------------------------------------------------------------------------------------------------------------------------------------
+
+section21:addSlider("WalkSpeed", 16, 0, 200, function(value)
+	pcall(function()
+		lplr.Character.Humanoid.WalkSpeed=value
+	end)
+end)
+
+section21:addToggle("Inf jump", nil, function(value)
+	infjumpon = value
+	game:GetService("UserInputService").JumpRequest:connect(function()
+		if infjumpon == true then
+			if bindworksvenyx == _G.luckyblockven then
+				lplr.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+			end
+		end
+	end)
+end)
+
+section21:addKeybind("Click TP", nil, function()
+	if bindworksvenyx == _G.luckyblockven then
+		hum = lplr.Character.HumanoidRootPart
+		mouse = lplr:GetMouse()
+		hum.CFrame = CFrame.new(mouse.Hit.x, mouse.Hit.y + 5, mouse.Hit.z)
+	end
+end)
+
+nocl = section21:addToggle("Noclip", nil, function(value)
+	noclipenable = value
+end)
+
+section21:addKeybind("Noclip Bind", nil, function()
+	if bindworksvenyx == _G.luckyblockven then
+		noclipenable = not noclipenable
+		section21:updateToggle(nocl, 'Noclip', noclipenable)
+	end
+end)
+
+section21:addButton("Btools", function()
+	function unlockEverything(a)
+		for n,o in pairs(a:GetChildren())do
+			if(o:IsA("BasePart"))then 
+				o.Locked = false 
+			end
+			unlockEverything(o)
+		end
+	end
+	unlockEverything(Workspace)
+	Instance.new("HopperBin", game.Players.LocalPlayer.Backpack).BinType = 4
+	Instance.new("HopperBin", game.Players.LocalPlayer.Backpack).BinType = 3
+	Instance.new("HopperBin", game.Players.LocalPlayer.Backpack).BinType = 2
+end)
+
+section21:addButton("Alt Delete", function()
+	local Mouse = lplr:GetMouse()
+	Mouse.Button1Down:connect(function()
+		if not game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftAlt) and not game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.RightAlt)then return end
+		if not Mouse.Target then return end
+		Mouse.Target:Destroy()
+	end)
+end)
+
+section22:addKeybind("Fly", nil, function()
+	if bindworksvenyx == _G.luckyblockven then
+		if _G.romfflyingon then
+			_G.romfflyingon = false
+		else 
+			_G.romfflyingon = true
+			loadstring([[local mouse = game.Players.LocalPlayer:GetMouse()
+			local plr = game.Players.LocalPlayer 
+			local torso = plr.Character.Head 
+			local deb = true 
+			local ctrl = {f = 0, b = 0, l = 0, r = 0} 
+			local lastctrl = {f = 0, b = 0, l = 0, r = 0} 
+			local speed = 0
+			 
+			function Fly()
+				local bg = Instance.new("BodyGyro", torso) 
+				bg.P = 9e4 
+				bg.maxTorque = Vector3.new(9e9, 9e9, 9e9) 
+				bg.cframe = torso.CFrame 
+				local bv = Instance.new("BodyVelocity", torso) 
+				bv.velocity = Vector3.new(0,0.1,0)
+				bv.maxForce = Vector3.new(9e9, 9e9, 9e9)
+				repeat wait()
+					pcall(function()
+						plr.Character.Humanoid.PlatformStand = true
+						if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then 
+							speed = _G.maxspeedromfly
+						elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then 
+							speed = 0
+						end
+						if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then
+							bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
+							lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r} 
+						elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then 
+							bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
+						else 
+							bv.velocity = Vector3.new(0,0.1,0)
+						end
+						bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*50*speed/_G.maxspeedromfly),0,0)
+					end)
+				until not _G.romfflyingon
+				pcall(function()
+				ctrl = {f = 0, b = 0, l = 0, r = 0}
+				lastctrl = {f = 0, b = 0, l = 0, r = 0}
+				speed = 0 
+				bg:Destroy() 
+				bv:Destroy() 
+				plr.Character.Humanoid.PlatformStand = false
+				end)
+			end
+			mouse.KeyDown:connect(function(key)
+				if key:lower() == "w" then
+				ctrl.f = 1
+				elseif key:lower() == "s" then
+				ctrl.b = -1
+				elseif key:lower() == "a" then
+				ctrl.l = -1
+				elseif key:lower() == "d" then
+				ctrl.r = 1
+				end
+			end)
+			mouse.KeyUp:connect(function(key)
+				if key:lower() == "w" then
+				ctrl.f = 0
+				elseif key:lower() == "s" then
+				ctrl.b = 0
+				elseif key:lower() == "a" then
+				ctrl.l = 0
+				elseif key:lower() == "d" then
+				ctrl.r = 0
+				end
+			end)
+			Fly()]])()
+		end
+	end
+end)
+
+section22:addSlider("Fly speed", 100, 0, 1000, function(value)
+	if value < 2000 then
+		_G.maxspeedromfly=value
+	else
+		_G.maxspeedromfly=2000
+	end
+end)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-- Page3 ---------------------------------------------------------------------------------------------------------------------------------------
+
+playersdrop = section31:addDropdown("Players", playerst, function(value)
+	playertpchoose = game.Players:FindFirstChild(value)
+end)
+
+section31:addButton("Tp to player", function()
+	lplr.Character.HumanoidRootPart.CFrame = playertpchoose.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
+end)
+
+section31:addSlider("Loop tp Distance", 2, -10, 10, function(value)
+	looptpdistance = value
+end)
+
+loptp = section31:addToggle("Loop tp", nil, function(value)
+	looptpenable = value
+	if looptpenable == true then
+		repeat wait()
+			pcall(function()
+				if bindworksvenyx == _G.luckyblockven then
+					lplr.Character.HumanoidRootPart.CFrame = playertpchoose.Character.HumanoidRootPart.CFrame + Vector3.new(0, 0, 0) + playertpchoose.Character.HumanoidRootPart.CFrame.lookVector * -looptpdistance
+				end
+			end)
+		until looptpenable == false
+	end
+end)
+
+section31:addKeybind("Loop tp Bind", nil, function()
+	if bindworksvenyx == _G.luckyblockven then
+		looptpenable = not looptpenable
+		section31:updateToggle(loptp, 'Loop tp', looptpenable)
+		if looptpenable == true then
+			repeat game:GetService("RunService").RenderStepped:wait()
+				pcall(function()
+					lplr.Character.HumanoidRootPart.CFrame = playertpchoose.Character.HumanoidRootPart.CFrame + Vector3.new(0, 0, 0) + playertpchoose.Character.HumanoidRootPart.CFrame.lookVector * -looptpdistance
+				end)
+			until looptpenable == false or bindworksvenyx ~= _G.luckyblockven
+		end
+	end
+end)
+
+section31:addButton('Players list refesh', function()
+	playerst = {}
+	for i,v in pairs(game.Players:GetChildren()) do
+		table.insert(playerst, v.Name)
+	end
+	section31:updateDropdown(playersdrop, 'Players', playerst)
+end)
+
+section32:addToggle("Backstab ForceField check", nil, function(value)
+	forcefieldcheck = value
+end)
+
+section32:addSlider("Backstab Distance", 3, -10, 10, function(value)
+	backstabdistance = value
+end)
+
+backstabtogg = section32:addToggle("Backstab all", nil, function(value)
+	backstabenable = value
+end)
+
+section32:addKeybind("Backstab all Bind", nil, function()
+	if bindworksvenyx == _G.luckyblockven then
+		backstabenable = not backstabenable
+	end
+end)
+
+section32:addToggle("Backstab Player", nil, function(value)
+	playerbackstab = value
+	repeat wait()
+		if bindworksvenyx == _G.luckyblockven then
+			pcall(function()
+				if playerbackstab then
+					if forcefieldcheck then
+						local mg = 9e9
+						local usr;
+						if playertpchoose.Character and playertpchoose ~= lplr and not playertpchoose.Character:FindFirstChild("FShield") then
+							local mag = (lplr.Character.HumanoidRootPart.Position - playertpchoose.Character.HumanoidRootPart.Position).magnitude
+							if mag < mg and playertpchoose.Character.Humanoid.Health > 0 then
+								mg = mag
+								usr = playertpchoose.Character
+							end
+						end
+						for i, v in pairs(usr:GetChildren()) do
+							if v:IsA("BasePart") then
+								v.CanCollide = false
+							end
+						end
+						usr.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + lplr.Character.HumanoidRootPart.CFrame.lookVector * backstabdistance
+					else
+						local mg = 9e9
+						local usr;
+							if playertpchoose.Character and playertpchoose ~= lplr then
+								local mag = (lplr.Character.HumanoidRootPart.Position - playertpchoose.Character.HumanoidRootPart.Position).magnitude
+								if mag < mg and playertpchoose.Character.Humanoid.Health > 0 then
+									mg = mag
+									usr = playertpchoose.Character
+								end
+							end
+						for i, v in pairs(usr:GetChildren()) do
+							if v:IsA("BasePart") then
+								v.CanCollide = false
+							end
+						end
+						usr.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + lplr.Character.HumanoidRootPart.CFrame.lookVector * backstabdistance
+					end
+				end
+			end)
+		else
+			break
+		end
+	until playerbackstab == false
+end)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-- Page4 ---------------------------------------------------------------------------------------------------------------------------------------
+
+section41:addKeybind("Toggle Gui", Enum.KeyCode.RightControl, function()
+	venyx:toggle()
+end)
+
+section41:addButton("Rejoin", function()
+	venyx:Notify("Yes", "No", function(value)
+		if value == true then
+			game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+		end
+	end)
+end)
+
+section41:addButton("Destroy Gui", function()
+	venyx:Notify("Yes", "No", function(value)
+		if value == true then
+			venyx:toggle()
+			wait(0.1)
+			for i,v in pairs(game.CoreGui:GetChildren()) do
+				if v.Name == nameven then
+					v:Destroy()
+				end
+			end
+			_G.allgamevenyxys = _G.allgamevenyxys + 1
+		end
+	end)
+end)
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-- Functions -----------------------------------------------------------------------------------------------------------------------------------
+
+spawn(function()
+	while wait() do
+		if bindworksvenyx == _G.luckyblockven then
+			pcall(function()
+				if backstabenable then
+					if backstabteam then
+						if forcefieldcheck then
+							local mg = 9e9
+							local usr;
+							for i, v in pairs(game.Players:GetPlayers()) do
+								if v.Character and v.Team ~= lplr.Team and not v.Character:FindFirstChild("FShield") then
+									local mag = (lplr.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).magnitude
+									if mag < mg and v.Character.Humanoid.Health > 0 then
+										mg = mag
+										usr = v.Character
+									end
+								end
+							end
+							for i, v in pairs(usr:GetChildren()) do
+								if v:IsA("BasePart") then
+									v.CanCollide = false
+								end
+							end
+							usr.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + lplr.Character.HumanoidRootPart.CFrame.lookVector * backstabdistance
+						else
+							local mg = 9e9
+							local usr;
+							for i, v in pairs(game.Players:GetPlayers()) do
+								if v.Character and v.Team ~= lplr.Team then
+									local mag = (lplr.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).magnitude
+									if mag < mg and v.Character.Humanoid.Health > 0 then
+										mg = mag
+										usr = v.Character
+									end
+								end
+							end
+							for i, v in pairs(usr:GetChildren()) do
+								if v:IsA("BasePart") then
+									v.CanCollide = false
+								end
+							end
+							usr.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + lplr.Character.HumanoidRootPart.CFrame.lookVector * backstabdistance
+						end
+					else
+						if forcefieldcheck then
+							local mg = 9e9
+							local usr;
+							for i, v in pairs(game.Players:GetPlayers()) do
+								if v.Character and v ~= lplr and not v.Character:FindFirstChild("FShield") then
+									local mag = (lplr.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).magnitude
+									if mag < mg and v.Character.Humanoid.Health > 0 then
+										mg = mag
+										usr = v.Character
+									end
+								end
+							end
+							for i, v in pairs(usr:GetChildren()) do
+								if v:IsA("BasePart") then
+									v.CanCollide = false
+								end
+							end
+							usr.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + lplr.Character.HumanoidRootPart.CFrame.lookVector * backstabdistance
+						else
+							local mg = 9e9
+							local usr;
+							for i, v in pairs(game.Players:GetPlayers()) do
+								if v.Character and v ~= lplr then
+									local mag = (lplr.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).magnitude
+									if mag < mg and v.Character.Humanoid.Health > 0 then
+										mg = mag
+										usr = v.Character
+									end
+								end
+							end
+							for i, v in pairs(usr:GetChildren()) do
+								if v:IsA("BasePart") then
+									v.CanCollide = false
+								end
+							end
+							usr.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + lplr.Character.HumanoidRootPart.CFrame.lookVector * backstabdistance
+						end
+					end
+				end
+			end)
+		else
+			break
+		end
+	end
+end)
+
+spawn(function()
+	while game:GetService("RunService").RenderStepped:wait() do
+		if bindworksvenyx == _G.luckyblockven then
+			if noclipenable then
+				if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+					game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+				end
+			end
+		end
+	end
+end)
