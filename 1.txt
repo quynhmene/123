@@ -1,0 +1,32 @@
+-- Điều chỉnh các tên đối tượng và thuộc tính để phù hợp với trò chơi cụ thể
+local player = game.Players.LocalPlayer
+local mouse = player:GetMouse()
+
+function findNearestTarget()
+    local nearestTarget = nil
+    local shortestDistance = math.huge
+
+    for i, v in pairs(game.Workspace:WaitForChild("Players"):GetChildren()) do
+        if v ~= player then
+            local distance = (v:WaitForChild("Character").HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).magnitude
+            if distance < shortestDistance then
+                shortestDistance = distance
+                nearestTarget = v
+            end
+        end
+    end
+
+    return nearestTarget
+end
+
+function aimAtTarget(target)
+    if target then
+        local targetPosition = target.Character.HumanoidRootPart.Position
+        mouse.Hit = CFrame.new(player.Character.Head.Position, targetPosition)
+    end
+end
+
+while wait(0.1) do
+    local target = findNearestTarget()
+    aimAtTarget(target)
+end
